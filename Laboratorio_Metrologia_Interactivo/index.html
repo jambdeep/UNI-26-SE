@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102a43">
+<meta name="description" content="Laboratorio interactivo de operación de sistemas electrónicos y metrología. Circuito, multímetro, exactitud, precisión y bitácora.">
+<title>Laboratorio de medición | Operación de Sistemas Electrónicos</title>
+<link rel="stylesheet" href="styles.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#principal">Saltar al contenido</a>
+<header class="topbar">
+ <div class="brand"><div class="brand-mark">Ω</div><div><strong>Laboratorio de ingeniería</strong><small>Operación de Sistemas Electrónicos · 8.º semestre</small></div></div>
+ <!-- <div class="top-actions"><span class="time-pill">⏱ Ruta de 60 min</span><button id="teacherToggle" class="btn btn-ghost" aria-pressed="false">Modo profesor: desactivado</button></div> -->
+</header>
+<div class="layout">
+<aside class="sidebar" aria-label="Navegación del laboratorio">
+ <div class="sidebar-caption">ESTACIONES</div>
+ <nav id="nav">
+  <a href="#inicio" data-section="inicio"><span>01</span> La misión</a>
+  <a href="#circuito" data-section="circuito"><span>02</span> Circuito y mediciones</a>
+  <a href="#metrologia" data-section="metrologia"><span>03</span> Banco de multímetros</a>
+  <a href="#diagnostico" data-section="diagnostico"><span>04</span> Diagnóstico</a>
+  <a href="#bitacora" data-section="bitacora"><span>05</span> Mi bitácora</a>
+  <a href="#cierre" data-section="cierre"><span>06</span> Dictamen final</a>
+ </nav>
+ <div class="sidebar-note"><strong>Sobre este recurso</strong><p>Funciona sin cuentas ni conexión después de descargarlo. Sus instrumentos son modelos didácticos, no equipos calibrados.</p></div>
+</aside>
+<main id="principal">
+<section id="inicio" class="stage hero">
+ <div class="eyebrow">MISIÓN · 00–10 MINUTOS</div>
+ <h1>¿Podemos confiar en esta medición?</h1>
+ <p class="lead">Una fuente de alimentación parece funcionar bien, pero las lecturas no siempre cuentan la misma historia. Tu trabajo es <strong>medir, contrastar y justificar</strong> si los resultados son confiables.</p>
+ <div class="hero-facts"><div><strong>01</strong><span>Analiza un circuito</span></div><div><strong>02</strong><span>Prueba instrumentos</span></div><div><strong>03</strong><span>Documenta evidencias</span></div></div>
+ <div class="mission-grid"><article class="mini-card"><span class="card-kicker">MÓDULO 1</span><h3>Sistema electrónico</h3><p>Componentes, conexiones, tecnología y operación de un circuito eléctrico elemental.</p></article><article class="mini-card"><span class="card-kicker">MÓDULO 2</span><h3>Metrología</h3><p>Medición, exactitud, precisión, repetibilidad, errores y límites de la simulación.</p></article><article class="mini-card"><span class="card-kicker">ENTREGABLE 1</span><h3>Bitácora visual</h3><p>Identificación del instrumento, revisión, dos mediciones, registro y reflexión.</p></article></div>
+ <div class="callout"><strong>Pregunta inicial:</strong> si un multímetro marca 5.00 V cinco veces consecutivas, ¿eso demuestra que mide correctamente? <button class="btn btn-ghost reveal-trigger" data-reveal="startAnswer" aria-expanded="false">Revelar reflexión</button><p id="startAnswer" class="reveal" hidden>No necesariamente. La repetibilidad no demuestra exactitud: sin un valor de referencia confiable no podemos cuantificar el sesgo del instrumento.</p></div>
+ <p class="teacher-note">Guion sugerido: presenta al grupo la misión y solicita una respuesta intuitiva antes de revelar la explicación. Si estás solo, formula la pregunta, deja unos segundos y resuélvela en voz alta.</p>
+ <a class="next" href="#circuito">Iniciar laboratorio de circuito <span>→</span></a>
+</section>
+<section id="circuito" class="stage">
+ <div class="eyebrow">ESTACIÓN 02 · 10–25 MINUTOS</div><h2>Circuito y mediciones</h2><p class="intro">Modifica una fuente y dos resistencias en serie. Elige una magnitud, coloca las puntas virtuales en los nodos y compara la lectura con el cálculo de referencia.</p>
+ <div class="split">
+ <div class="panel circuit-panel">
+  <div class="panel-head"><h3>Circuito de prueba</h3><span class="chip">Modelo ideal DC</span></div>
+  <svg id="circuitSvg" viewBox="0 0 690 370" role="img" aria-label="Circuito serie cerrado con fuente de corriente continua y dos resistencias. Las líneas punteadas representan la forma de conectar el instrumento según la magnitud a medir.">
+   <defs>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#dfe7f0"/></pattern>
+    <marker id="arrowCurrent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#f2a64c"/></marker>
+   </defs>
+   <rect width="690" height="370" fill="url(#dots)" rx="12"/>
+   <g id="baseCircuit" stroke="#34536b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path id="wireTopLeft" d="M120 90 H170"/>
+    <path id="wireTopRight" d="M275 90 H460"/>
+    <path id="wireRightUpper" d="M460 90 V150"/>
+    <path id="wireRightLower" d="M460 245 V295"/>
+    <path id="wireBottomRight" d="M460 295 H334"/>
+    <path id="wireBottomLeft" d="M248 295 H120"/>
+    <path id="wireSourceTop" d="M120 90 V156"/>
+    <path id="wireSourceBottom" d="M120 224 V295"/>
+    <path id="r1Path" d="M170 90 l10 -16 l16 32 l16 -32 l16 32 l16 -32 l16 16 h15"/>
+    <path id="r2Path" d="M460 150 l-14 10 l28 17 l-28 17 l28 17 l-28 17 l14 10"/>
+    <circle id="sourceCircle" cx="120" cy="190" r="34" fill="#fff"/>
+    <circle id="ammeterInline" cx="291" cy="295" r="38" fill="#fff"/>
+   </g>
+   <g id="sourceGraphics" fill="#34536b" text-anchor="middle">
+    <text x="120" y="195" font-size="26" font-weight="700">⎓</text>
+   </g>
+   <g class="circuit-labels" fill="#34536b">
+    <text x="20" y="162" text-anchor="start" font-size="12" font-weight="700">Fuente DC</text>
+    <text x="20" y="190" text-anchor="start" font-size="26" font-weight="800" id="svgSource">12 V</text>
+    <text x="222" y="58" text-anchor="middle" font-size="18" font-weight="700">R₁</text>
+    <text x="222" y="125" text-anchor="middle" font-size="18" font-weight="700" id="svgR1">1 kΩ</text>
+    <text x="492" y="198" font-size="18" font-weight="700">R₂</text>
+    <text x="492" y="224" font-size="18" font-weight="700" id="svgR2">2 kΩ</text>
+    <text x="291" y="302" text-anchor="middle" font-size="22" font-weight="800" id="inlineMeterLabel">A</text>
+    <text x="360" y="350" text-anchor="middle" font-size="16" font-weight="700" id="svgCurrent">I = 4.00 mA</text>
+   </g>
+   <g class="nodes" id="nodes">
+    <g class="node" data-node="A" tabindex="0" role="button" aria-label="Seleccionar nodo A"><circle cx="120" cy="90" r="14"/><text x="120" y="95">A</text></g>
+    <g class="node" data-node="B" tabindex="0" role="button" aria-label="Seleccionar nodo B"><circle cx="460" cy="90" r="14"/><text x="460" y="95">B</text></g>
+    <g class="node" data-node="C" tabindex="0" role="button" aria-label="Seleccionar nodo C"><circle cx="460" cy="295" r="14"/><text x="460" y="300">C</text></g>
+   </g>
+   <g id="currentSpot" class="current-spot" tabindex="0" role="button" aria-label="Seleccionar punto de corriente en serie">
+    <rect x="248" y="252" width="86" height="86" rx="43" fill="transparent" stroke="transparent"/>
+   </g>
+   <g id="seriesArrow" opacity="0.9">
+    <path d="M150 318 H240" stroke="#f2a64c" stroke-width="3" marker-end="url(#arrowCurrent)"/>
+    <text x="195" y="338" fill="#9b6a1d" font-size="12" text-anchor="middle" font-weight="700">corriente en serie</text>
+   </g>
+   <g id="voltageOverlay" class="measure-overlay" visibility="hidden">
+    <path id="voltageLead" d="M120 90 H460"/>
+    <circle id="voltageBadge" class="badge" cx="290" cy="90" r="19"/>
+    <text id="voltageBadgeText" x="290" y="96">V</text>
+    <text id="voltageCaption" class="caption" x="290" y="62">medición en paralelo</text>
+   </g>
+   <g id="resistanceOverlay" class="measure-overlay" visibility="hidden">
+    <path id="resistanceLead" d="M170 90 H275"/>
+    <circle id="resistanceBadge" class="badge" cx="222" cy="90" r="19"/>
+    <text id="resistanceBadgeText" x="222" y="96">Ω</text>
+    <text id="resistanceCaption" class="caption" x="222" y="62">fuente apagada + componente aislado</text>
+   </g>
+   <g id="componentHalo" visibility="hidden">
+    <rect id="componentHighlight" x="155" y="55" width="135" height="70" rx="12" fill="#0b859116" stroke="#0b8591" stroke-width="2" stroke-dasharray="7 6"/>
+   </g>
+  </svg>
+  <p class="hint">El <strong>circuito base permanece cerrado</strong>. Las <strong>líneas punteadas</strong> muestran cómo se conecta el instrumento: <strong>V⎓</strong> y <strong>Ω</strong> en paralelo; <strong>A⎓</strong> en serie. Para medir <strong>Ω</strong>, la fuente debe estar apagada y se asume el componente aislado.</p>
+  <div class="controls-grid"><label>Fuente DC (V)<select id="sourceSelect"><option value="5">5 V</option><option value="9">9 V</option><option value="12" selected>12 V</option><option value="15">15 V</option></select></label><label>R₁ (Ω)<select id="r1Select"><option value="470">470 Ω</option><option value="1000" selected>1 kΩ</option><option value="2200">2.2 kΩ</option></select></label><label>R₂ (Ω)<select id="r2Select"><option value="1000">1 kΩ</option><option value="2000" selected>2 kΩ</option><option value="3300">3.3 kΩ</option></select></label></div>
+  <label class="toggle-inline"><input id="powerSwitch" type="checkbox" checked> Fuente encendida</label>
+ </div>
+ <div class="panel instrument-panel"><div class="panel-head"><h3>Multímetro virtual</h3><span class="chip">Simulación didáctica</span></div>
+  <div class="multimeter" aria-label="Multímetro virtual con pantalla de lectura"><div class="meter-top"><span>VIRTUAL DMM</span><span>DC / Ω</span></div><div class="meter-screen"><div class="meter-mode-label" id="meterMode">V⎓ · Voltaje continuo</div><div class="meter-reading"><output id="meterReading" aria-live="polite">—</output><span id="meterUnit">V</span></div><div class="meter-screen-sub" id="meterInfo">Selecciona dos nodos</div></div><div class="meter-dial"><span class="meter-dial-core">↻</span></div><div class="meter-jacks"><span><b class="jack black"></b>COM</span><span><b class="jack red"></b>VΩmA</span></div></div>
+  <fieldset class="measure-modes"><legend>Selector de función</legend><label><input type="radio" name="meterMode" value="V" checked> V⎓</label><label><input type="radio" name="meterMode" value="A"> A⎓</label><label><input type="radio" name="meterMode" value="R"> Ω</label></fieldset>
+  <div id="probeControls"><label>Punta roja (nodo)<select id="redProbe"><option value="A">A</option><option value="B" selected>B</option><option value="C">C</option></select></label><label>Punta negra (nodo)<select id="blackProbe"><option value="A">A</option><option value="B">B</option><option value="C" selected>C</option></select></label></div>
+  <div id="resistanceControls" hidden><label>Componente aislado para medir resistencia<select id="resistorTarget"><option value="R1">R₁</option><option value="R2">R₂</option></select></label><p class="hint">Se supone el componente aislado del circuito. En un circuito real, una medición de resistencia energizada sería incorrecta y potencialmente peligrosa.</p></div>
+  <p class="meter-status" id="meterStatus" role="status">Configura las puntas para medir.</p>
+  <button id="takeMeasurement" class="btn btn-primary full">Registrar esta medición en la bitácora</button>
+ </div>
+ </div>
+ <div class="panel formulas"><div class="panel-head"><h3>Predicción teórica</h3><button class="btn btn-ghost reveal-trigger" data-reveal="formulaValues" aria-expanded="false">Mostrar / ocultar cálculos</button></div><p>Antes de revelar los resultados, calcula: <strong>I = V / (R₁ + R₂)</strong> y <strong>V₂ = I · R₂</strong>.</p><div id="formulaValues" class="reveal" hidden><div class="result-grid"><div><small>Corriente serie</small><strong id="theoryI">4.000 mA</strong></div><div><small>Voltaje R₁</small><strong id="theoryV1">4.000 V</strong></div><div><small>Voltaje R₂</small><strong id="theoryV2">8.000 V</strong></div></div><p class="small-muted">Estos valores constituyen una referencia de diseño ideal, no la lectura de un patrón calibrado.</p></div></div>
+ <p class="teacher-note">Guion sugerido: pide predecir I y V₂. Después, mide entre B y C. Cambia la resistencia R₂ y pregunta qué magnitud se modifica y por qué.</p>
+ <a class="next" href="#metrologia">Ir al banco de multímetros <span>→</span></a>
+</section>
+<section id="metrologia" class="stage">
+ <div class="eyebrow">ESTACIÓN 03 · 25–40 MINUTOS</div><h2>Banco de multímetros</h2><p class="intro">Los tres instrumentos miden una referencia asignada de <strong>5.00 V</strong>. Sus cinco lecturas muestran por qué <strong>exactitud</strong> y <strong>precisión</strong> no significan lo mismo.</p>
+ <div class="bench-grid"><div class="panel"><div class="meter-tabs" role="group" aria-label="Seleccionar instrumento"><button class="tab active" data-meter="A">Equipo A</button><button class="tab" data-meter="B">Equipo B</button><button class="tab" data-meter="C">Equipo C</button></div><div class="multimeter bench-meter"><div class="meter-top"><span id="benchName">DMM · EQUIPO A</span><span>DC VOLT</span></div><div class="meter-screen"><div class="meter-mode-label">REFERENCIA ASIGNADA: 5.00 V</div><div class="meter-reading"><output id="benchReading">5.00</output><span>V</span></div><div class="meter-screen-sub">Lectura <span id="readingPosition">1</span> de 5</div></div><div class="meter-dial"><span class="meter-dial-core">↻</span></div><div class="meter-jacks"><span><b class="jack black"></b>COM</span><span><b class="jack red"></b>VΩmA</span></div></div><div class="bench-actions"><button class="btn btn-primary" id="nextReading">Siguiente lectura →</button><button class="btn btn-secondary" id="resetReading">Reiniciar serie</button></div><div class="readings" id="readingsList" aria-label="Cinco lecturas del instrumento"></div></div>
+ <div class="panel bench-analysis"><div class="panel-head"><h3>Análisis metrológico</h3><span class="chip">5 lecturas</span></div><div class="stat-grid"><div><span>Promedio</span><strong id="avgVal">—</strong></div><div><span>Sesgo medio*</span><strong id="biasVal">—</strong></div><div><span>Desv. estándar muestral</span><strong id="sdVal">—</strong></div><div><span>Error relativo medio*</span><strong id="errVal">—</strong></div></div><div class="bars-wrap"><div class="chart-header"><div class="chart-title">Lecturas frente a la referencia de 5.00 V</div><label for="chartScale">Escala de la gráfica<select id="chartScale"><option value="detail" selected>Ampliada (por equipo)</option><option value="general">General (4.40–5.60 V)</option></select></label></div><div class="line-chart" id="readingChart" role="img" aria-label="Gráfica de cinco lecturas con eje vertical en voltios, valores de lectura y línea de referencia"></div><div class="chart-legend"><span><i class="legend-readings"></i>Lecturas del multímetro</span><span><i class="legend-reference"></i>Referencia = 5.00 V</span></div><div class="chart-note" id="scaleNote">Escala ampliada para distinguir pequeñas diferencias; consulta los límites numéricos en el eje Y.</div></div><div class="calculation-section"><button class="btn btn-secondary reveal-trigger" data-reveal="calculationDetails" aria-expanded="false">¿Cómo se calcularon estos resultados?</button><div class="calculation-details reveal" id="calculationDetails" hidden><p>Los cálculos se actualizan al cambiar de equipo. <strong>n = 5 mediciones</strong> y <strong>referencia asignada = 5.00 V</strong>.</p><div id="formulaBreakdown"></div><p class="small-muted">El error relativo mostrado corresponde al <strong>error firmado del promedio</strong> respecto a la referencia, no al promedio de los errores absolutos individuales. Un valor de 0 % no implica ausencia de dispersión ni demuestra calibración.</p></div></div><div class="question"><strong>¿Qué puedes concluir de este instrumento?</strong><p>¿Sus lecturas están agrupadas? ¿Están cerca de la referencia? ¿Son suficientes para hablar de calibración?</p><button class="btn btn-secondary reveal-trigger" data-reveal="benchConclusion" aria-expanded="false">Revelar análisis</button><p class="reveal" id="benchConclusion" hidden></p></div><small>* Suponiendo que el valor de referencia es válido. Los datos son ficticios; no representan una calibración trazable.</small></div></div>
+ <div class="callout"><strong>Desafío:</strong> determina si el equipo B es preciso aunque sus lecturas estén alejadas de 5.00 V. Justifica con el promedio y la dispersión, no solo con la pantalla.</div>
+ <a class="next" href="#diagnostico">Resolver un diagnóstico <span>→</span></a>
+</section>
+<section id="diagnostico" class="stage">
+ <div class="eyebrow">ESTACIÓN 04 · 40–50 MINUTOS</div><h2>Diagnóstico de una lectura sospechosa</h2><p class="intro">Selecciona una situación, formula una hipótesis y revela una explicación. No todo resultado inesperado es un defecto del instrumento.</p>
+ <div class="scenario-tabs" role="group" aria-label="Selecciona un escenario"><button class="tab active" data-scenario="0">01 · Conexión</button><button class="tab" data-scenario="1">02 · Componente</button><button class="tab" data-scenario="2">03 · Sesgo</button></div>
+ <div class="panel scenario"><div class="scenario-icon">!</div><div><span class="card-kicker" id="scenarioLabel">CASO 01</span><h3 id="scenarioTitle">Un voltaje inesperado</h3><p id="scenarioText"></p><div class="scenario-reading" id="scenarioData"></div><label>¿Cuál es tu hipótesis?<textarea id="hypothesis" rows="3" placeholder="Escribe primero tu razonamiento…"></textarea></label><button id="revealScenario" class="btn btn-secondary" aria-expanded="false">Revelar explicación técnica</button><div class="reveal scenario-solution" id="scenarioSolution" hidden></div></div></div>
+ <div class="panel"><h3>La cadena de confianza metrológica</h3><div class="chain"><div>Magnitud</div><span>→</span><div>Instrumento</div><span>→</span><div>Calibración</div><span>→</span><div>Patrón / trazabilidad</div><span>→</span><div>Resultado e incertidumbre</div></div><p class="small-muted">El simulador ayuda a estudiar los principios, pero no emite certificados de calibración, no acredita trazabilidad y no caracteriza por sí mismo la incertidumbre de un instrumento real.</p></div>
+ <a class="next" href="#bitacora">Organizar evidencias <span>→</span></a>
+</section>
+<section id="bitacora" class="stage">
+ <div class="eyebrow">ESTACIÓN 05 · 50–55 MINUTOS</div><h2>Mi bitácora visual</h2><p class="intro">Organiza el registro para el <strong>Entregable 1: Bitácora visual de medición, del instrumento al resultado</strong>. Este apoyo <strong>no sustituye</strong> las fotografías propias, la hoja manuscrita ni los requisitos de la consigna.</p>
+ <div class="bitacora-grid"><div class="panel"><div class="panel-head"><h3>Registro de trabajo</h3><span class="chip">Borrador descargable</span></div><label>Nombre del estudiante<input id="studentName" type="text" placeholder="Nombre completo"></label><label>Instrumento usado<input id="instrumentName" type="text" value="Multímetro virtual (modelo didáctico)" placeholder="Multímetro, osciloscopio..."></label><label>Verificación previa<textarea id="checkNote" rows="2" placeholder="¿Qué verificaste antes de medir? Fuente, modo, bornes, conexiones…"></textarea></label><div class="record-header"><h4>Mediciones registradas</h4><button class="btn btn-ghost" id="clearMeasurements">Limpiar registros</button></div><div id="measurementTableWrap" class="table-scroll"><table><thead><tr><th>Magnitud</th><th>Lectura</th><th>Rango / modo</th><th>Conexión</th></tr></thead><tbody id="measurementTable"><tr><td colspan="4">Todavía no hay mediciones. Regresa a la estación 2.</td></tr></tbody></table></div><label>Reflexión preliminar: ¿exactitud, precisión o ambas?<textarea id="reflection" rows="5" placeholder="Escribe aquí tu borrador; la consigna solicita una reflexión manuscrita de al menos 80 palabras…"></textarea></label><div class="wordcount" id="wordCount">0 palabras · mínimo solicitado en el entregable: 80</div><div class="button-row"><button class="btn btn-primary" id="downloadNotes">Descargar borrador .txt</button><button class="btn btn-secondary" id="printNotes">Imprimir / guardar como PDF</button></div><p class="small-muted">Los datos se conservan solo durante esta sesión del navegador; descarga tu borrador antes de cerrar. El PDF imprimible es una hoja de trabajo, no la entrega final completa.</p></div>
+ <div class="panel checklist"><h3>Correspondencia con el entregable</h3><ol><li><strong>Identificar el instrumento.</strong> Fotografía propia y 4 partes etiquetadas.</li><li><strong>Verificar el estado.</strong> Fotografía del instrumento, cables, alimentación y condiciones; la simulación solo permite revisar parámetros virtuales.</li><li><strong>Dos mediciones distintas.</strong> Imágenes con lectura y contacto, de acuerdo con las instrucciones oficiales.</li><li><strong>Registrar resultados.</strong> Magnitud, valor, unidad y rango escritos a mano, más su fotografía.</li><li><strong>Reflexionar.</strong> Mínimo 80 palabras manuscritas y fotografiadas, incluyendo factores de error.</li></ol><div class="callout modest"><strong>Nombre de entrega:</strong> <code>IEO010_E1_[iniciales].pdf</code><p>Incluye nombre completo, fecha, nombre del instrumento y fotografías ordenadas con pie de imagen.</p></div><p class="small-muted">La actividad contempla un proceso real o simulado, pero sus pasos detallados exigen evidencias fotográficas personales y anotaciones a mano. Consulta con el docente si las capturas del simulador pueden sustituir alguna fotografía de instrumento físico.</p></div></div>
+ <a class="next" href="#cierre">Emitir dictamen <span>→</span></a>
+</section>
+<section id="cierre" class="stage">
+ <div class="eyebrow">ESTACIÓN 06 · 55–60 MINUTOS</div><h2>Dictamen del ingeniero</h2><p class="intro">Concluye la misión: ¿autorizarías la operación del sistema basándote solo en estas mediciones virtuales?</p>
+ <div class="panel final-panel"><fieldset><legend>Selecciona tu decisión</legend><label class="decision"><input type="radio" name="decision" value="Autorizaría sin verificar">Autorizaría sin verificar</label><label class="decision"><input type="radio" name="decision" value="Autorizaría condicionado a verificación física" checked>Autorizaría condicionado a verificación física</label><label class="decision"><input type="radio" name="decision" value="No autorizaría hasta investigar">No autorizaría hasta investigar</label></fieldset><label>Justificación técnica<textarea id="finalReason" rows="4" placeholder="Justifica mediante al menos una medición, un concepto metrológico y una limitación de la simulación."></textarea></label><button id="saveDecision" class="btn btn-primary">Incorporar decisión a la bitácora</button><p class="success-message" id="saveDecisionMessage" role="status"></p></div>
+ <div class="callout"><strong>Para continuar después de la clase:</strong> reproduce una medición en un instrumento disponible, revisa sus conexiones y estado físico, completa las fotografías solicitadas y redacta la reflexión manuscrita. Si no tienes instrumento físico, consulta qué evidencias simuladas acepta el profesor.</div><footer>Laboratorio didáctico de operación de sistemas electrónicos · HTML, CSS y JavaScript locales · Sin dependencias externas</footer>
+</section>
+</main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
